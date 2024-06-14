@@ -1,6 +1,6 @@
 document.getElementById('subscribe').addEventListener('click', function() {
     if ('serviceWorker' in navigator && 'PushManager' in window) {
-        navigator.serviceWorker.register('service-worker.js')
+        navigator.serviceWorker.register('public/service-worker.js')
         .then(function(registration) {
             console.log('Service Worker registrado com sucesso:', registration);
 

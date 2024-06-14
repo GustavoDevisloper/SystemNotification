@@ -14,13 +14,13 @@ webpush.setVapidDetails('mailto:your-email@example.com', publicVapidKey, private
 
 // Middleware para processar JSON e servir arquivos estáticos
 app.use(bodyParser.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public', express.static(path.join(__dirname, 'public')));
 
 // Armazena a subscrição
 let subscription;
 
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname,'index.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
 app.post('/subscribe', (req, res) => {
@@ -37,7 +37,7 @@ app.post('/sendNotification', (req, res) => {
         res.status(200).json({ message: 'Notification sent successfully' });
     }).catch(error => {
         console.error('Erro ao enviar notificação:', error);
-        res.status(500).json({ error: 'Failed to send notti', details: error.toString() });
+        res.status(500).json({ error: 'Failed to send notification', details: error.toString() });
     });
 });
 

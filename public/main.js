@@ -54,7 +54,7 @@ document.getElementById('subscribe').addEventListener('click', function() {
         })
         .catch(function(error) {
             console.log('Falha no registro do Service Worker:', error);
-            statusElement.textContent += '\nFalha no registro do Service Worker.';
+            statusElement.textContent += '\nFalha no registro do Service Worker: ' + error.message;
         });
     } else {
         console.warn('Push messaging is not supported');

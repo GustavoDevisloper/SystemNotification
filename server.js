@@ -37,7 +37,7 @@ app.post('/sendNotification', (req, res) => {
         res.status(200).json({ message: 'Notification sent successfully' });
     }).catch(error => {
         console.error('Erro ao enviar notificação:', error);
-        res.status(500).json({ error: 'Failed to send notification', details: error.toString() });
+        res.status(500).json({ error: 'Failed to send notti', details: error.toString() });
     });
 });
 

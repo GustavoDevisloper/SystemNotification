@@ -16,24 +16,31 @@ webpush.setVapidDetails('mailto:your-email@example.com', publicVapidKey, private
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Rota para a página inicial
+// Armazena a subscrição
+let subscription;
+
 app.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
-// Rota para subscrever ao Push Service
 app.post('/subscribe', (req, res) => {
-    const subscription = req.body;
+    subscription = req.body;
+    console.log('Recebida nova subscrição:', subscription);
     res.status(201).json({});
+});
 
-    const payload = JSON.stringify({ title: 'Push Test', body: 'This is a test notification' });
+app.post('/sendNotification', (req, res) => {
+    const payload = JSON.stringify({ title: 'Manual Notification', body: 'This is a manually triggered notification' });
 
-    webpush.sendNotification(subscription, payload).catch(error => {
-        console.error(error.stack);
+    webpush.sendNotification(subscription, payload).then(response => {
+        console.log('Notificação enviada com sucesso:', response);
+        res.status(200).json({ message: 'Notification sent successfully' });
+    }).catch(error => {
+        console.error('Erro ao enviar notificação:', error);
+        res.status(500).json({ error: 'Failed to send notification', details: error.toString() });
     });
 });
 
-// Inicializa o servidor
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
